@@ -1,32 +1,32 @@
-# Experiment Report: Data Quality Impact on AI Agent
+# Báo Cáo Thí Nghiệm: Tác Động Của Chất Lượng Dữ Liệu Lên AI Agent
 
-**Student ID:** AI20K-XXXX
-**Name:** Nguyen Quang Tho
-**Date:** 2026-04-15
-
----
-
-## 1. Ket qua thi nghiem
-
-Chay `agent_simulation.py` voi 2 bo du lieu va ghi lai ket qua:
-
-| Scenario | Agent Response | Accuracy (1-10) | Notes |
-|----------|----------------|-----------------|-------|
-| Clean Data (`processed_data.csv`) | "Based on my data, the best choice is Laptop at $1200." | 9 | Correct, Laptop is the most expensive valid electronics product |
-| Garbage Data (`garbage_data.csv`) | "Based on my data, the best choice is Nuclear Reactor at $999999." | 1 | Wrong — Agent returned a fabricated outlier record with an unrealistic price |
+**Mã học viên:** AI20K-XXXX
+**Họ và tên:** Nguyễn Quang Thọ
+**Ngày thực hiện:** 2026-04-15
 
 ---
 
-## 2. Phan tich & nhan xet
+## 1. Kết Quả Thí Nghiệm
 
-### Tai sao Agent tra loi sai khi dung Garbage Data?
+Chạy `agent_simulation.py` với 2 bộ dữ liệu và ghi lại kết quả:
 
-Khi dung garbage_data.csv, Agent tra loi sai vi bo du lieu chua nhieu van de nghiem trong ve chat luong. Thu nhat, co **Duplicate IDs** (id=1 xuat hien 2 lan), khien Agent xu ly du lieu khong nhat quan. Thu hai, co **wrong data type** trong cot price (gia tri "ten dollars" khong phai so), gay ra loi khi tinh toan. Thu ba, co **outlier cuc doan** la san pham "Nuclear Reactor" voi gia 999999, khong phan anh thuc te thi truong. Thu tu, record "Ghost Item" co **null ID va price = 0**, nghia la du lieu khong hop le nhung van ton tai trong file. Vi Agent don gian lay record co price cao nhat trong category "electronics", no chon "Nuclear Reactor" — mot ket qua vo nghia va sai hoan toan. Dieu nay chung minh rang du lieu rac doc hai hon la prompt kem: du cho Agent rat thong minh, no van cho ra ket qua sai neu du lieu dau vao khong sach.
+| Kịch bản | Phản hồi của Agent | Độ chính xác (1-10) | Ghi chú |
+|----------|-------------------|---------------------|---------|
+| Dữ liệu sạch (`processed_data.csv`) | "Based on my data, the best choice is Laptop at $1200." | 9 | Đúng — Laptop là sản phẩm điện tử có giá cao nhất và hợp lệ |
+| Dữ liệu rác (`garbage_data.csv`) | "Based on my data, the best choice is Nuclear Reactor at $999999." | 1 | Sai — Agent trả về bản ghi ngoại lệ với giá trị phi thực tế |
 
 ---
 
-## 3. Ket luan
+## 2. Phân Tích & Nhận Xét
 
-**Quality Data > Quality Prompt?** Dong y.
+### Tại sao Agent trả lời sai khi dùng Garbage Data?
 
-Du lieu sach quan trong hon prompt hay mo hinh AI. Trong thi nghiem nay, cung mot Agent voi cung logic, khi dung clean data cho ket qua chinh xac (9/10), nhung khi dung garbage data cho ket qua sai hoan toan (1/10). Ket luan: **Garbage In, Garbage Out** — ETL Pipeline va Data Validation la nen tang cua moi he thong AI dang tin cay.
+Khi dùng `garbage_data.csv`, Agent trả lời sai vì bộ dữ liệu chứa nhiều vấn đề nghiêm trọng về chất lượng. Thứ nhất, có **ID trùng lặp** (id=1 xuất hiện 2 lần), khiến Agent xử lý dữ liệu không nhất quán. Thứ hai, có **kiểu dữ liệu sai** trong cột `price` (giá trị "ten dollars" không phải số), gây lỗi khi tính toán. Thứ ba, có **giá trị ngoại lệ cực đoan** là sản phẩm "Nuclear Reactor" với giá 999.999, không phản ánh thực tế thị trường. Thứ tư, bản ghi "Ghost Item" có **ID null và price = 0**, nghĩa là dữ liệu không hợp lệ nhưng vẫn tồn tại trong file. Vì Agent đơn giản lấy bản ghi có giá cao nhất trong danh mục "electronics", nó chọn "Nuclear Reactor" — một kết quả vô nghĩa và sai hoàn toàn. Điều này chứng minh rằng dữ liệu rác gây hại hơn là prompt kém: dù Agent rất thông minh, nó vẫn cho ra kết quả sai nếu dữ liệu đầu vào không sạch.
+
+---
+
+## 3. Kết Luận
+
+**Dữ liệu chất lượng cao > Prompt chất lượng cao?** Đồng ý.
+
+Dữ liệu sạch quan trọng hơn prompt hay mô hình AI. Trong thí nghiệm này, cùng một Agent với cùng logic, khi dùng dữ liệu sạch cho kết quả chính xác (9/10), nhưng khi dùng dữ liệu rác cho kết quả sai hoàn toàn (1/10). Kết luận: **Garbage In, Garbage Out** — ETL Pipeline và Data Validation là nền tảng của mọi hệ thống AI đáng tin cậy.
