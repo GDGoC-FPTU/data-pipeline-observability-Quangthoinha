@@ -1,7 +1,7 @@
 # Báo Cáo Thí Nghiệm: Tác Động Của Chất Lượng Dữ Liệu Lên AI Agent
 
-**Mã học viên:** AI20K-XXXX
-**Họ và tên:** Nguyễn Quang Thọ
+**Mã học viên:** 2A202600167
+**Họ và tên:** Nguyễn Hữu Quang
 **Ngày thực hiện:** 2026-04-15
 
 ---
