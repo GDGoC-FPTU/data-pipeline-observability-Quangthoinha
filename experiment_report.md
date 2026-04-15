@@ -12,14 +12,14 @@ Chạy `agent_simulation.py` với 2 bộ dữ liệu và ghi lại kết quả:
 
 | Kịch bản | Phản hồi của Agent | Độ chính xác (1-10) | Ghi chú |
 |----------|-------------------|---------------------|---------|
-| Dữ liệu sạch (`processed_data.csv`) | "Based on my data, the best choice is Laptop at $1200." | 9 | Đúng — Laptop là sản phẩm điện tử có giá cao nhất và hợp lệ |
-| Dữ liệu rác (`garbage_data.csv`) | "Based on my data, the best choice is Nuclear Reactor at $999999." | 1 | Sai — Agent trả về bản ghi ngoại lệ với giá trị phi thực tế |
+| Clean Data (`processed_data.csv`) | "Based on my data, the best choice is Laptop at $1200." | 9 | Đúng — Laptop là sản phẩm điện tử có giá cao nhất và hợp lệ |
+| Garbage Data (`garbage_data.csv`) | "Based on my data, the best choice is Nuclear Reactor at $999999." | 1 | Sai — Agent trả về bản ghi ngoại lệ với giá trị phi thực tế |
 
 ---
 
-## 2. Phân Tích & Nhận Xét
+## 2. Phân Tích & Nhận Xét (Phan tich & nhan xet)
 
-### Tại sao Agent trả lời sai khi dùng Garbage Data?
+### Tại sao Agent trả lời sai khi dùng Garbage Data? (Tai sao Agent tra loi sai?)
 
 Khi dùng `garbage_data.csv`, Agent trả lời sai vì bộ dữ liệu chứa nhiều vấn đề nghiêm trọng về chất lượng. Thứ nhất, có **ID trùng lặp** (id=1 xuất hiện 2 lần), khiến Agent xử lý dữ liệu không nhất quán. Thứ hai, có **kiểu dữ liệu sai** trong cột `price` (giá trị "ten dollars" không phải số), gây lỗi khi tính toán. Thứ ba, có **giá trị ngoại lệ cực đoan** là sản phẩm "Nuclear Reactor" với giá 999.999, không phản ánh thực tế thị trường. Thứ tư, bản ghi "Ghost Item" có **ID null và price = 0**, nghĩa là dữ liệu không hợp lệ nhưng vẫn tồn tại trong file. Vì Agent đơn giản lấy bản ghi có giá cao nhất trong danh mục "electronics", nó chọn "Nuclear Reactor" — một kết quả vô nghĩa và sai hoàn toàn. Điều này chứng minh rằng dữ liệu rác gây hại hơn là prompt kém: dù Agent rất thông minh, nó vẫn cho ra kết quả sai nếu dữ liệu đầu vào không sạch.
 
